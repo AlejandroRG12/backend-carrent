@@ -12,7 +12,10 @@ class UsuarioRepository:
     
     def get_usuario_by_id(self, usuario_id):
         doc = self.collection.document(usuario_id).get()
-        return doc.to_dict() if doc.exists else None
+        if doc.exists:
+            return Usuario.from_dict(doc.to_dict())
+        else:
+            return None
     
     def get_by_user(self, usuario):
         query = self.collection.where('usuario', '==', usuario).stream()

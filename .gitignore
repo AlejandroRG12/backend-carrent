@@ -1,3 +1,4 @@
+.env
 venv
 src/config/credentials.json
 src/config/__pycache__

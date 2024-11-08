@@ -1,8 +1,9 @@
 from flask import jsonify
 
 class ResponsePetition:
-    def __init__(self, status='', message='', data=[]):
+    def __init__(self, status='', code=0, message='', data=[]):
         self.status = status
+        self.code = code
         self.message = message
         self.data = data
 
@@ -12,6 +13,7 @@ class ResponsePetition:
     def return_response(self):
         return jsonify({
             'status': self.status,
+            'code': self.code,
             'message': self.message,
             'data': self.data
         })

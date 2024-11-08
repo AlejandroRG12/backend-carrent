@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, make_response   
 from services.usuario_service import UsuarioService
 from helpers.response import ResponsePetition
 
@@ -11,20 +11,34 @@ class UsuarioController:
         try:
             usuarios = self.service.get_all_usuarios()
             usuarios_dict = [usuario.to_dict() for usuario in usuarios]
-            response = ResponsePetition('success', 'Usuarios encontrados', usuarios_dict)
-            return response.return_response()
+            response = ResponsePetition('success', 200,'Usuarios encontrados', usuarios_dict)
+            return make_response(response.return_response(), 200)
         except Exception as e:
-            response = ResponsePetition('error', str(e))
-            return response.return_response()
+            response = ResponsePetition('error', 500,  str(e))
+            return make_response(response.return_response(), 500)
 
     def get_usuario_by_id(self, id):
-        usuario = self.service.get_usuario_by_id(id)
-        return jsonify(usuario) if usuario else jsonify({'Empleado no encontrado': True})
+        try:
+            usuario = self.service.get_usuario_by_id(id)
+            if usuario:
+                usuario_dict = usuario.to_dict()
+                response = ResponsePetition('success', 200, 'Usuario encontrado', usuario_dict)
+            else:
+                response = ResponsePetition('error', 400, 'Usuario no encontrado')
+            return make_response(response.return_response(), 200)
+        except Exception as e:
+            response = ResponsePetition('error', 500, str(e))
+            return make_response(response.return_response(), 500)
 
     def create_usuario(self):
         data = request.get_json()
         try:
             user_id = self.service.create_usuario(data)
-            return jsonify({'id': user_id}), 201
+            if 'error' in user_id:
+                response = ResponsePetition('error', 400, user_id['error'])
+                return make_response(response.return_response(), 400)
+            response = ResponsePetition('success', 201,'Usuario creado', {'id': user_id})
+            return make_response(response.return_response(), 201)
         except ValueError as e:
-            return jsonify({'error': str(e)}), 400
+            response = ResponsePetition('error', 400, str(e))
+            return make_response(response.return_response(), 400)
