@@ -3,6 +3,7 @@ from controller.usuario_controller import UsuarioController
 from controller.vehiculo_controller import VehiculoController
 from controller.review_controller import ReviewController
 from controller.renta_controller import RentaController
+from controller.pago_controller import PagoController
 
 routes = Blueprint('routes', __name__)
 
@@ -68,7 +69,7 @@ def delete_review(id):
     return ReviewController().delete_review(id)
 
 """
-    - - - - - -  RUTAS DE REVIEWS  - - - - - -
+    - - - - - -  RUTAS DE RENTAS  - - - - - -
 """
 @routes.route('/rentas', methods=['GET'])
 def get_all_rentas():
@@ -89,3 +90,27 @@ def update_renta(id):
 @routes.route('/rentas/<string:id>', methods=['DELETE'])
 def delete_renta(id):
     return RentaController().delete_renta(id)
+
+"""
+    - - - - - -  RUTAS DE PAGOS  - - - - - -
+"""
+@routes.route('/pagos', methods=['GET'])
+def get_all_pagos():
+    return PagoController().get_all_pagos()
+
+@routes.route('/pagos/<string:id>', methods=['GET'])
+def get_pago_by_id(id):
+    return PagoController().get_pago_by_id(id)
+
+@routes.route('/pagos', methods=['POST'])
+def create_pago():
+    return PagoController().create_pago()
+
+@routes.route('/pagos/<string:id>', methods=['PUT'])
+def update_pago(id):
+    return PagoController().update_pago(id)
+
+@routes.route('/pagos/<string:id>', methods=['DELETE'])
+def delete_pago(id):
+    return PagoController().delete_pago(id)
+

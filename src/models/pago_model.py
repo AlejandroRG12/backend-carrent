@@ -1,5 +1,6 @@
 class Pago:
-    def __init__(self, id_renta='', targeta_numero='', targeta_expiracion='', targeta_propietario='', targeta_cvc='', paypal_correo='', montoTotal='', fecha=''):
+    def __init__(self, id=None, id_renta='', targeta_numero='', targeta_expiracion='', targeta_propietario='', targeta_cvc='', paypal_correo='', montoTotal='', fecha=''):
+        self.id = id
         self.id_renta = id_renta
         self.targeta_numero = targeta_numero
         self.targeta_expiracion = targeta_expiracion
@@ -9,9 +10,9 @@ class Pago:
         self.montoTotal = montoTotal
         self.fecha = fecha
 
-        def to_dict(self):
-            return self.__dict__
+    def to_dict(self):
+        return self.__dict__
         
-        @staticmethod
-        def from_dict(data):
-            return Pago(**data)
+    @staticmethod
+    def from_dict(data):
+        return Pago(**data)
