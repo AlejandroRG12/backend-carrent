@@ -2,6 +2,7 @@ from flask import Blueprint
 from controller.usuario_controller import UsuarioController
 from controller.vehiculo_controller import VehiculoController
 from controller.review_controller import ReviewController
+from controller.renta_controller import RentaController
 
 routes = Blueprint('routes', __name__)
 
@@ -65,3 +66,26 @@ def update_review(id):
 @routes.route('/reviews/<string:id>', methods=['DELETE'])
 def delete_review(id):
     return ReviewController().delete_review(id)
+
+"""
+    - - - - - -  RUTAS DE REVIEWS  - - - - - -
+"""
+@routes.route('/rentas', methods=['GET'])
+def get_all_rentas():
+    return RentaController().get_all_rentas()
+
+@routes.route('/rentas/<string:id>', methods=['GET'])
+def get_renta_by_id(id):
+    return RentaController().get_renta_by_id(id)
+
+@routes.route('/rentas', methods=['POST'])
+def create_renta():
+    return RentaController().create_renta()
+
+@routes.route('/rentas/<string:id>', methods=['PUT'])
+def update_renta(id):
+    return RentaController().update_renta(id)
+
+@routes.route('/rentas/<string:id>', methods=['DELETE'])
+def delete_renta(id):
+    return RentaController().delete_renta(id)
