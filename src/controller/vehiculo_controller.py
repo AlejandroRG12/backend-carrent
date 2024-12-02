@@ -44,7 +44,7 @@ class VehiculoController:
             data = request.get_json()
             try:
                 vehiculo_id = self.service.update_vehiculo(id, data)
-                response = ResponsePetition('success', 'Vehículo actualizado', {'id': vehiculo_id})
+                response = ResponsePetition('success', 200, 'Vehículo actualizado', {'id': vehiculo_id})
                 return make_response(response.return_response(), 200)
             except ValueError as e:
                 response = ResponsePetition('error', 400, str(e))

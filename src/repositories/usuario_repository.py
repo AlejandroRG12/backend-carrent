@@ -21,8 +21,18 @@ class UsuarioRepository:
         query = self.collection.where('usuario', '==', usuario).stream()
         result = [doc.to_dict() for doc in query]
         return result[0] if result else None
+    
 
     def create_usuario(self, data_usaurio):
         doc = self.collection.document()
         doc.set(data_usaurio.to_dict())
         return doc.id
+    
+    def update_usuario(self, usuario_id, data_usuario):
+        doc = self.collection.document(usuario_id)
+        doc.update(data_usuario.to_dict())
+        return doc.id
+    
+    def delete_usuario(self, usuario_id):
+        self.collection.document(usuario_id).delete()
+        return usuario_id

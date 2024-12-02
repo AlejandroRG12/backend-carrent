@@ -4,6 +4,7 @@ from controller.vehiculo_controller import VehiculoController
 from controller.review_controller import ReviewController
 from controller.renta_controller import RentaController
 from controller.pago_controller import PagoController
+from controller.auth_controller import AuthController
 
 routes = Blueprint('routes', __name__)
 
@@ -21,6 +22,14 @@ def get_usuario_by_id(id):
 @routes.route('/usuarios', methods=['POST'])
 def create_usuario():
     return UsuarioController().create_usuario()
+
+@routes.route('/usuarios/<string:id>', methods=['PUT'])
+def update_usuario(id):
+    return UsuarioController().update_usuario(id)
+
+@routes.route('/usuarios/<string:id>', methods=['DELETE'])
+def delete_usuario(id):
+    return UsuarioController().delete_usuario(id)
 
 """
     - - - - - -  RUTAS DE VEHICULOS  - - - - - -
@@ -114,3 +123,9 @@ def update_pago(id):
 def delete_pago(id):
     return PagoController().delete_pago(id)
 
+"""
+    - - - - - -  RUTAS DE AUTH  - - - - - -
+"""
+@routes.route('/auth', methods=['POST'])
+def login():
+    return AuthController().login()

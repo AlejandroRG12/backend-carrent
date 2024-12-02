@@ -42,3 +42,28 @@ class UsuarioController:
         except ValueError as e:
             response = ResponsePetition('error', 400, str(e))
             return make_response(response.return_response(), 400)
+        
+    def update_usuario(self, id):
+        data = request.get_json()
+        try:
+            user_id = self.service.update_usuario(id, data)
+            if 'error' in user_id:
+                response = ResponsePetition('error', 400, user_id['error'])
+                return make_response(response.return_response(), 400)
+            response = ResponsePetition('success', 200, 'Usuario actualizado', {'id': user_id})
+            return make_response(response.return_response(), 200)
+        except ValueError as e:
+            response = ResponsePetition('error', 400, str(e))
+            return make_response(response.return_response(), 400)
+        
+    def delete_usuario(self, id):
+        try:
+            user_id = self.service.delete_usuario(id)
+            if 'error' in user_id:
+                response = ResponsePetition('error', 400, user_id['error'])
+                return make_response(response.return_response(), 400)
+            response = ResponsePetition('success', 200, 'Usuario eliminado', {'id': user_id})
+            return make_response(response.return_response(), 200)
+        except ValueError as e:
+            response = ResponsePetition('error', 400, str(e))
+            return make_response(response.return_response(), 400)

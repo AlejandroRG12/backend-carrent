@@ -22,3 +22,14 @@ class UsuarioService:
         usuarioNuevo = Usuario(**data_usuario)
         return self.repository.create_usuario(usuarioNuevo)
     
+    def update_usuario(self, id, data_usuario):
+        if not self.repository.get_usuario_by_id(id):
+            return {'error': 'Usuario no existe'}
+        hashed = bcrypt.hashpw(data_usuario['password'].encode('utf-8'), bcrypt.gensalt())
+        data_usuario['password'] = hashed.decode('utf-8')
+        usuarioNuevo = Usuario(**data_usuario)
+        return self.repository.update_usuario(id, usuarioNuevo)
+    
+    def delete_usuario(self, id):
+        return self.repository.delete_usuario(id)
+    
